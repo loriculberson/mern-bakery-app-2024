@@ -1,22 +1,23 @@
-import { useQuery } from '@apollo/client';
-import { Button, DatePicker } from 'antd';
-
-
+import { useQuery, useMutation } from '@apollo/client';
+import MenuCard from './MenuCard.jsx'
+import './MenuList.css'
 import { QUERY_ITEMS } from '../utils/queries.js';
 
 const MenuList = () => {
     const { loading, data } = useQuery(QUERY_ITEMS);
 
+
     const items = data?.items || [];
-    console.log(loading, data)
 
-    return(
+    const itemList = items.map(item => {
+        return (
+            <MenuCard key={item._id} item={item} />
+        )
+    })
 
-  <>
-    <Button type="primary">PRESS ME</Button>
-    <DatePicker placeholder="select date" />
-  </>
-);
-            
+    return (
+        <div className="container">{itemList}</div>
+    );
+
 }
 export default MenuList
